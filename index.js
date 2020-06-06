@@ -53,11 +53,11 @@ client.on('message', (message) => {
 
     message.channel.send(embed)
   } else if(message.content == '/who 부마스터5') {     //부마스터 정보(듄링님)
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718542239881756783/unknown.png';
+    let img = '';
     let embed = new Discord.RichEmbed()
       .setTitle('듄링님의 오픈채팅방은 없습니다.')
       .setURL()
-      .setAuthor('듄링', img)
+      .setAuthor('듄링', img, 'https://cafe.naver.com/purple90bcz')
       .setThumbnail(img)
       .addBlankField()
       .addField('레벨', '??')
@@ -74,7 +74,7 @@ client.on('message', (message) => {
     let embed = new Discord.RichEmbed()
       .setTitle('듄리님의 오픈채팅방은 없습니다.')
       .setURL()
-      .setAuthor('듄리', img)
+      .setAuthor('듄리', img, 'https://cafe.naver.com/purple90bcz')
       .setThumbnail(img)
       .addBlankField()
       .addField('레벨', '90')
@@ -98,7 +98,7 @@ client.on('message', (message) => {
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '부마스터', true)
       .addField('???', '???', true)
-      .addField('세르님의 매력', '???????\n??????\n???????\n')
+      .addField('엔댤님의 매력', '???????\n??????\n???????\n')
       .addBlankField()
       .setTimestamp()
 
