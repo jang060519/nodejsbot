@@ -35,7 +35,7 @@ client.on('message', (message) => {
     return message.reply('안녕하세요');
   }
 
-  if(message.content == '/who 부마스터1') {     //부마스터 정보(녤쁨님)
+  if(message.content == '/who 부마스터6') {     //부마스터 정보(녤쁨님)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718542239881756783/unknown.png';
     let embed = new Discord.RichEmbed()
       .setTitle('녤쁨님의 카카오톡 1대1 오픈채팅방')
@@ -52,7 +52,7 @@ client.on('message', (message) => {
       .setTimestamp()
 
     message.channel.send(embed)
-  } else if(message.content == '/who 부마스터2') {     //부마스터 정보(세르님)
+  } else if(message.content == '/who 부마스터1') {     //부마스터 정보(세르님)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718548101761073213/unknown.png';
     let embed = new Discord.RichEmbed()
       .setTitle('세르님의 카카오톡 1대1 오픈채팅방')
