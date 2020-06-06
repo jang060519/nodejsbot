@@ -69,12 +69,29 @@ client.on('message', (message) => {
       .setTimestamp()
 
     message.channel.send(embed)
-  } else if(message.content == '/who 부마스터1') {     //부마스터 정보(세르님)
+  } else if(message.content == '/who 부마스터4') {     //부마스터 정보(듄리님)
+    let img = '';
+    let embed = new Discord.RichEmbed()
+      .setTitle('듄리님의 오픈채팅방은 없습니다.')
+      .setURL()
+      .setAuthor('듄리', img)
+      .setThumbnail(img)
+      .addBlankField()
+      .addField('레벨', '90')
+      .addField('소속 클랜', 'Melode', true)
+      .addField('직위', '부마스터', true)
+      .addField('현재 상태', '정지', true)
+      .addField('듄링님의 매력', '???????\n??????\n???????\n')
+      .addBlankField()
+      .setTimestamp()
+
+    message.channel.send(embed)
+  } else if(message.content == '/who 부마스터1') {     //부마스터 정보(엔댤님)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718548101761073213/unknown.png';
     let embed = new Discord.RichEmbed()
-      .setTitle('세르님의 카카오톡 1대1 오픈채팅방')
+      .setTitle('엔댤님의 카카오톡 1대1 오픈채팅방')
       .setURL('https://open.kakao.com/o/smOEmZ5b')
-      .setAuthor('세르', img, 'https://cafe.naver.com/purple90bcz')
+      .setAuthor('엔댤', img, 'https://cafe.naver.com/purple90bcz')
       .setThumbnail(img)
       .addBlankField()
       .addField('레벨', '89')
@@ -108,7 +125,7 @@ client.on('message', (message) => {
     let commandList = [
       {name: '/who', desc: '클랜 정보를 알 수 있다. ex)/who 마스터'},
       {name: '/help', desc: '명령어 정보를 알 수 있다'},
-      {name: '/전체공지', desc: 'dm으로 전체 공지 보내기(관리자 전용)'},
+      {name: '/전체공지', desc: 'DM으로 전체 공지 보내기(관리자 전용)'},
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
