@@ -44,11 +44,11 @@ client.on('message', (message) => {
       .setAuthor('녤쁨', img, 'https://cafe.naver.com/purple90bcz')
       .setThumbnail(img)
       .addBlankField()
-      .addField('레벨', '??')
+      .addField('레벨', '76')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '부마스터', true)
       .addField('???', '???', true)
-      .addField('녤쁨님의 매력', '???????\n??????\n???????\n')
+      .addField('녤쁨님의 매력', '1. 귀엽다.\n??????\n???????\n')
       .addBlankField()
       .setTimestamp()
 
