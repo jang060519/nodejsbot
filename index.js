@@ -52,6 +52,23 @@ client.on('message', (message) => {
       .setTimestamp()
 
     message.channel.send(embed)
+  } else if(message.content == '/who 부마스터5') {     //부마스터 정보(듄링님)
+    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718542239881756783/unknown.png';
+    let embed = new Discord.RichEmbed()
+      .setTitle('듄링님의 오픈채팅방은 없습니다.')
+      .setURL()
+      .setAuthor('듄링', img)
+      .setThumbnail(img)
+      .addBlankField()
+      .addField('레벨', '??')
+      .addField('소속 클랜', 'Melode', true)
+      .addField('직위', '부마스터', true)
+      .addField('???', '???', true)
+      .addField('듄링님의 매력', '???????\n??????\n???????\n')
+      .addBlankField()
+      .setTimestamp()
+
+    message.channel.send(embed)
   } else if(message.content == '/who 부마스터1') {     //부마스터 정보(세르님)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718548101761073213/unknown.png';
     let embed = new Discord.RichEmbed()
@@ -60,7 +77,7 @@ client.on('message', (message) => {
       .setAuthor('세르', img, 'https://cafe.naver.com/purple90bcz')
       .setThumbnail(img)
       .addBlankField()
-      .addField('레벨', '??')
+      .addField('레벨', '89')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '부마스터', true)
       .addField('???', '???', true)
@@ -69,7 +86,7 @@ client.on('message', (message) => {
       .setTimestamp()
 
     message.channel.send(embed)
-  } else if(message.content == '/who 마스터') {     //마스터 정보
+  } else if(message.content == '/who 마스터') {     //마스터 정보(전달사항)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718535648142688326/unknown.png';
     let embed = new Discord.RichEmbed()
       .setTitle('전달사항님의 카카오톡 1대1 오픈채팅방')
