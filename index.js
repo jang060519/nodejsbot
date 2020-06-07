@@ -35,8 +35,40 @@ client.on('message', (message) => {
   if(message.content == '안녕하세요') {
     return message.reply('안녕하세요');
   }
+}
 
-  if(message.content == '/who 부마스터6') {     //부마스터 정보(녤쁨님)
+if(message.content == '!si') {
+  let embed = new Discord.RichEmbed()
+  let img = 'https://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
+  var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
+  embed.setColor('#186de6')
+  embed.setAuthor('server info of 콜라곰 BOT', img)
+  embed.setFooter(`콜라곰 BOT ❤️`)
+  embed.addBlankField()
+  embed.addField('RAM usage',    `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true);
+  embed.addField('running time', `${duration}`, true);
+  embed.addField('user',         `${client.users.size.toLocaleString()}`, true);
+  embed.addField('server',       `${client.guilds.size.toLocaleString()}`, true);
+  // embed.addField('channel',      `${client.channels.size.toLocaleString()}`, true);
+  embed.addField('Discord.js',   `v${Discord.version}`, true);
+  embed.addField('Node',         `${process.version}`, true);
+  
+  let arr = client.guilds.array();
+  let list = '';
+  list = `\`\`\`css\n`;
+  
+  for(let i=0;i<arr.length;i++) {
+    // list += `${arr[i].name} - ${arr[i].id}\n`
+    list += `${arr[i].name}\n`
+  }
+  list += `\`\`\`\n`
+  embed.addField('list:',        `${list}`);
+
+  embed.setTimestamp()
+  message.channel.send(embed);
+}
+
+  if(message.content == '/who 녤쁨') {     //부마스터 정보(녤쁨님)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718542239881756783/unknown.png';
     let embed = new Discord.RichEmbed()
       .setTitle('녤쁨님의 카카오톡 1대1 오픈채팅방')
@@ -47,13 +79,13 @@ client.on('message', (message) => {
       .addField('레벨', '76')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '부마스터', true)
-      .addField('???', '???', true)
+      .addField('현재 상태', '정상', true)
       .addField('녤쁨님의 매력', '1. 귀엽다.\n??????\n???????\n')
       .addBlankField()
       .setTimestamp()
 
     message.channel.send(embed)
-  } else if(message.content == '/who 부마스터5') {     //부마스터 정보(듄링님)
+  } else if(message.content == '/who 듄링(듄리님 부캐로 추정)') {     //부마스터 정보(듄링님)
     let img = '';
     let embed = new Discord.RichEmbed()
       .setTitle('듄링님의 오픈채팅방은 없습니다.')
@@ -64,13 +96,13 @@ client.on('message', (message) => {
       .addField('레벨', '??')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '부마스터', true)
-      .addField('???', '???', true)
+      .addField('현재 상태', '정지', true)
       .addField('듄링님의 매력', '???????\n??????\n???????\n')
       .addBlankField()
       .setTimestamp()
 
     message.channel.send(embed)
-  } else if(message.content == '/who 부마스터4') {     //부마스터 정보(듄리님)
+  } else if(message.content == '/who 듄리') {     //부마스터 정보(듄리님)
     let img = '';
     let embed = new Discord.RichEmbed()
       .setTitle('듄리님의 오픈채팅방은 없습니다.')
@@ -82,12 +114,12 @@ client.on('message', (message) => {
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '부마스터', true)
       .addField('현재 상태', '정지', true)
-      .addField('듄링님의 매력', '???????\n??????\n???????\n')
+      .addField('듄리님의 매력', '???????\n??????\n???????\n')
       .addBlankField()
       .setTimestamp()
 
     message.channel.send(embed)
-  } else if(message.content == '/who 부마스터1') {     //부마스터 정보(엔댤님)
+  } else if(message.content == '/who 엔댤') {     //부마스터 정보(엔댤님)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718548101761073213/unknown.png';
     let embed = new Discord.RichEmbed()
       .setTitle('엔댤님의 카카오톡 1대1 오픈채팅방')
@@ -98,13 +130,13 @@ client.on('message', (message) => {
       .addField('레벨', '89')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '부마스터', true)
-      .addField('???', '???', true)
+      .addField('현재 상태', '정상', true)
       .addField('엔댤님의 매력', '???????\n??????\n???????\n')
       .addBlankField()
       .setTimestamp()
 
     message.channel.send(embed)
-  } else if(message.content == '/who 마스터') {     //마스터 정보(전달사항)
+  } else if(message.content == '/who 전달사항') {     //마스터 정보(전달사항)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718535648142688326/unknown.png';
     let embed = new Discord.RichEmbed()
       .setTitle('전달사항님의 카카오톡 1대1 오픈채팅방')
@@ -115,7 +147,7 @@ client.on('message', (message) => {
       .addField('레벨', '90')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '클랜 마스터', true)
-      .addField('닉네임을 클릭하여', '클랜 카페로 이동합니다.', true)
+      .addField('현재 상태', '정상', true)
       .addField('전달사항님의 매력', '???????\n???????\n???????\n')
       .addBlankField()
       .setTimestamp()
