@@ -36,36 +36,6 @@ client.on('message', (message) => {
     return message.reply('안녕하세요');
   }
 
-  if(message.content == '!si') {
-    let embed = new Discord.RichEmbed()
-    let img = 'https://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
-    var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
-    embed.setColor('#186de6')
-    embed.setAuthor('server info of 콜라곰 BOT', img)
-    embed.setFooter(`콜라곰 BOT ❤️`)
-    embed.addBlankField()
-    embed.addField('RAM usage',    `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true);
-    embed.addField('running time', `${duration}`, true);
-    embed.addField('user',         `${client.users.size.toLocaleString()}`, true);
-    embed.addField('server',       `${client.guilds.size.toLocaleString()}`, true);
-    embed.addField('channel',      `${client.channels.size.toLocaleString()}`, true);
-    embed.addField('Discord.js',   `v${Discord.version}`, true);
-    embed.addField('Node',         `${process.version}`, true);
-    
-    let arr = client.guilds.array();
-    let list = '';
-    list = `\`\`\`css\n`;
-    
-    for(let i=0;i<arr.length;i++) {
-      list += `${arr[i].name} - ${arr[i].id}\n`
-      list += `${arr[i].name}\n`
-    }
-    list += `\`\`\`\n`
-    embed.addField('list:',        `${list}`);
-
-    embed.setTimestamp()
-    message.channel.send(embed);
-  }
 
   if(message.content == '/who 녤쁨') {     //부마스터 정보(녤쁨님)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718542239881756783/unknown.png';
@@ -189,6 +159,44 @@ client.on('message', (message) => {
       return message.reply('채널에서 실행해주세요.');
     }
   }
+});
+
+if(message.content.startsWith('!청소')) {
+  if(checkPermission(message)) return
+
+  var clearLine = message.content.slice('!청소 '.length);
+  var isNum = !isNaN(clearLine)
+
+  if(isNum && (clearLine <= 0 || 100 < clearLine)) {
+    message.channel.send("1부터 100까지의 숫자만 입력해주세요.")
+    return;
+  } else if(!isNum) { 
+    if(message.content.split('<@').length == 2) {
+      if(isNaN(message.content.split(' ')[2])) return;
+
+      var user = message.content.split(' ')[1].split('<@!')[1].split('>')[0];
+      var count = parseInt(message.content.split(' ')[2])+1;
+      const _limit = 10;
+      let _cnt = 0;
+
+      message.channel.fetchMessages({limit: _limit}).then(collected => {
+        collected.every(msg => {
+          if(msg.author.id == user) {
+            msg.delete();
+            ++_cnt;
+          }
+          return !(_cnt == count);
+        });
+      });
+    }
+  } else {
+    message.channel.bulkDelete(parseInt(clearLine)+1)
+      .then(() => {
+        AutoMsgDelete(message, `<@${message.author.id}> ` + parseInt(clearLine) + "개의 메시지를 삭제했습니다. (이 메세지는 잠시 후에 사라집니다.)");
+      })
+      .catch(console.error)
+  }
+}
 });
 
 function checkPermission(message) {
