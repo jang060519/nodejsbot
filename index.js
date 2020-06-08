@@ -36,7 +36,7 @@ client.on('message', (message) => {
     return message.reply('안녕하세요');
   }
 
-  if(message.content == '!si') {
+  if(message.content == '/system') {
     let embed = new Discord.RichEmbed()
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/719466063544451072/bot_img.PNG';
     var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
