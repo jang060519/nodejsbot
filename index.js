@@ -153,12 +153,18 @@ client.on('message', (message) => {
       .setTimestamp()
 
     message.channel.send(embed)
+  } else if(message.content == '/초대코드') {
+    message.guild.channels.get(message.channel.id).createInvite({maxAge: 0}) // maxAge: 0은 무한이라는 의미, maxAge부분을 지우면 24시간으로 설정됨
+      .then(invite => {
+        message.channel.send(invite.url)
+      });
   } else if(message.content == '/help') {
     let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
     let commandList = [
-      {name: '/who', desc: '클랜 정보를 알 수 있다. ex)/who 마스터'},
       {name: '/help', desc: '명령어 정보를 알 수 있다'},
+      {name: '/who', desc: '클랜 정보를 알 수 있다. ex)/who 마스터'},
       {name: '/전체공지', desc: 'DM으로 전체 공지 보내기(관리자 전용)'},
+      {name: '/초대코드', desc: '초대코드를 생성합니다.'},
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
