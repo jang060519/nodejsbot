@@ -38,7 +38,7 @@ client.on('message', (message) => {
     return message.reply('pong');
   }
 
-  if(message.content == '!si') {
+  if(message.content == '/server') {
     let embed = new Discord.RichEmbed()
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/719466063544451072/bot_img.PNG';
     var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
@@ -156,7 +156,8 @@ client.on('message', (message) => {
   } else if(message.content == '/help') {
     let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
     let commandList = [
-      {name: '!help', desc: '현재 명령어 목록 보기'},
+      {name: '/help', desc: '현재 명령어 목록 보기'},
+      {name: '/server', desc: '현재 서버 상태 보기'},
       {name: '/who OOO', desc: '/who 뒤에 닉네임을 넣어 사용자 정보 보기'},
       {name: '/전체공지', desc: 'dm(개인 메세지)으로 전체 공지 보내기'},
       {name: '/전체공지2', desc: 'dm(개인 메세지)으로 전체 표 형식으로 공지 보내기'},
