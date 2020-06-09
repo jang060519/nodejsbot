@@ -5,8 +5,8 @@ const moment = require("moment");
 require("moment-duration-format");
 const welcomeChannelName = "꧁환영인사꧂";
 const byeChannelName = "나간기록😥";
-const welcomeChannelComment = "어서오세요. Melode클랜 디스코드에 오신것을 환영합니다.";
-const byeChannelComment = "다음에 또 만나요";
+const welcomeChannelComment = "어서오세요. Melode클랜 디스코드에 오신것을 환영합니다.\nMelode클랜 카카오톡 오픈 채팅방은 https://open.kakao.com/o/gndEvsfc←여기로 와주세요";
+const byeChannelComment = "다음에 또 만나요.ㅠㅠ"
 
 client.on('ready', () => {
   console.log('켰다.');
