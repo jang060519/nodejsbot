@@ -5,7 +5,7 @@ const moment = require("moment");
 require("moment-duration-format");
 const welcomeChannelName = "꧁환영인사꧂";
 const byeChannelName = "나간기록😥";
-const welcomeChannelComment = "";
+const welcomeChannelComment = "Melode클랜 디스코드에 오신것을 환영합니다.\n다른 채팅방을 알고싶으시면\n'/채팅방'을 입력하여 주세요.";
 const byeChannelComment = "다음에 또 만나요.ㅠㅠ";
 
 client.on('ready', () => {
@@ -18,7 +18,7 @@ client.on("guildMemberAdd", (member) => {
   const newUser = member.user;
   const welcomeChannel = guild.channels.find(channel => channel.name == welcomeChannelName);
 
-  welcomeChannel.send(`<@${newUser.id}> ${welcomeChannelComment}\n`);
+  welcomeChannel.send(`<@${newUser.id}>, ${newUser.id}님 ${welcomeChannelComment}\n`);
 
   member.addRole(guild.roles.find(role => role.name == "클랜원"));
 });
@@ -149,6 +149,23 @@ client.on('message', (message) => {
       .addField('직위', '클랜 마스터', true)
       .addField('현재 상태', '정상', true)
       .addField('전달사항님의 매력', '???????\n???????\n???????\n')
+      .addBlankField()
+      .setTimestamp()
+
+    message.channel.send(embed)
+  } else if(message.content == '/who 듄링') {     //부마스터 정보(듄링님)
+    let img = '';
+    let embed = new Discord.RichEmbed()
+      .setTitle('듄링님의 오픈채팅방은 없습니다.')
+      .setURL()
+      .setAuthor('듄링(듄리님 부캐로 추정)', img, 'https://cafe.naver.com/purple90bcz')
+      .setThumbnail(img)
+      .addBlankField()
+      .addField('레벨', '??')
+      .addField('소속 클랜', 'Melode', true)
+      .addField('직위', '부마스터', true)
+      .addField('현재 상태', '정지', true)
+      .addField('듄링님의 매력', '???????\n??????\n???????\n')
       .addBlankField()
       .setTimestamp()
 
