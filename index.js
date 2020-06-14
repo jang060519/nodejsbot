@@ -5,22 +5,8 @@ const moment = require("moment");
 require("moment-duration-format");
 const welcomeChannelName = "꧁환영인사꧂";
 const byeChannelName = "나간기록😥";
-const welcomeChannelComment =  let ,embed = new Discord.RichEmbed()
-  .setTitle('녤쁨님의 카카오톡 1대1 오픈채팅방')
-  .setURL('https://open.kakao.com/o/sq6cdS3b')
-  .setAuthor('녤쁨', img, 'https://cafe.naver.com/purple90bcz')
-  .setThumbnail(img)
-  .addBlankField()
-  .addField('레벨', '76')
-  .addField('소속 클랜', 'Melode', true)
-  .addField('직위', '부마스터', true)
-  .addField('현재 상태', '정상', true)
-  .addField('녤쁨님의 매력', '1. 귀엽다.\n??????\n???????\n')
-  .addBlankField()
-  .setTimestamp()
-
-  message.channel.send(embed)
-const byeChannelComment = "다음에 또 만나요.ㅠㅠ"
+const welcomeChannelComment = "";
+const byeChannelComment = "다음에 또 만나요.ㅠㅠ";
 
 client.on('ready', () => {
   console.log('켰다.');
