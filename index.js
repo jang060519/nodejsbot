@@ -18,7 +18,7 @@ client.on("guildMemberAdd", (member) => {
   const newUser = member.user;
   const welcomeChannel = guild.channels.find(channel => channel.name == welcomeChannelName);
 
-  welcomeChannel.send(`<@${newUser.id}>, ${newUser.name}님 ${welcomeChannelComment}\n`);
+  welcomeChannel.send(`<@${newUser.id}>님 ${welcomeChannelComment}\n`);
 
   member.addRole(guild.roles.find(role => role.name == "클랜원"));
 });
@@ -153,11 +153,10 @@ client.on('message', (message) => {
       .setTimestamp()
 
     message.channel.send(embed)
-  } else if(message.content == '/who 듄링') {     //부마스터 정보(듄링님)
+  } else if(message.content == '/채팅방') {     //부마스터 정보(듄링님)
     let img = '';
     let embed = new Discord.RichEmbed()
-      .setTitle('듄링님의 오픈채팅방은 없습니다.')
-      .setURL()
+      .setTitle('Melode클랜 채팅방')
       .setAuthor('듄링(듄리님 부캐로 추정)', img, 'https://cafe.naver.com/purple90bcz')
       .setThumbnail(img)
       .addBlankField()
