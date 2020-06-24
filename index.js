@@ -154,18 +154,18 @@ client.on('message', (message) => {
     message.channel.send(embed)
   } else if(message.content == '/이벤트 1번째') {     //마스터 정보(전달사항)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
-    let im = ''
+    let im = 'https://cdn.discordapp.com/attachments/719029385088204981/725282760092024882/cu1592986388096.jpg'
     let embed = new Discord.RichEmbed()
-      .setTitle('전달사항님의 카카오톡 1대1 오픈채팅방')
+      .setTitle('너의 스킨 꾸미기 실력을 보여줘.')
       .setURL('https://open.kakao.com/o/s1BI4jVb')
       .setAuthor('전달사항', img, 'https://cafe.naver.com/purple90bcz')
-      .setThumbnail(img)
+      .setThumbnail(im)
       .addBlankField()
-      .addField('레벨', '95')
+      .addField('주최자', '전달사항')
       .addField('소속 클랜', 'Melode', true)
-      .addField('직위', '클랜 마스터', true)
-      .addField('현재 상태', '정상', true)
-      .addField('전달사항님의 매력', '???????\n???????\n???????\n')
+      .addField('이벤트 시작 시간', '7월 Coming Soon', true)
+      .addField('이벤트 종료 시간', '7월 Coming Soon', true)
+      .addField('이벤트 보상', '1등 : 좀비고 코믹스 19권 쿠폰 세트\n2등 : 좀비고 코믹스 19권 쿠폰 세트\n3등 : 좀비고 코믹스 19권 쿠폰 세트\n')
       .addBlankField()
       .setTimestamp()
 
