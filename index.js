@@ -10,7 +10,7 @@ const byeChannelComment = "다음에 또 만나요.ㅠㅠ";
 
 client.on('ready', () => {
   console.log('켰다.');
-  client.user.setPresence({ game: { name: 'Melode클랜 서포트' }, status: 'offline' })
+  client.user.setPresence({ game: { name: 'league of legend' }, status: 'online' })
 });
 
 client.on("guildMemberAdd", (member) => {
@@ -90,31 +90,33 @@ client.on('message', (message) => {
     let embed = new Discord.RichEmbed()
       .setTitle('듄링님의 오픈채팅방은 없습니다.')
       .setURL()
-      .setAuthor('듄링(듄리님 부캐로 추정)', img, 'https://cafe.naver.com/purple90bcz')
+      .setAuthor('듄링', img, 'https://cafe.naver.com/purple90bcz')
       .setThumbnail(img)
       .addBlankField()
       .addField('레벨', '??')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '부마스터', true)
-      .addField('현재 상태', '정지', true)
+      .addField('현재 상태', '정상', true)
       .addField('듄링님의 매력', '???????\n??????\n???????\n')
       .addBlankField()
       .setTimestamp()
 
     message.channel.send(embed)
-  } else if(message.content == '/who 듄리') {     //부마스터 정보(듄리님)
-    let img = '';
+  } else if(message.content == '/who 셀리') {     //부마스터 정보(듄리님)
+    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725292899972939906/KakaoTalk_20200624_191421635_01.jpg';
+    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725292925541548052/KakaoTalk_20200624_191421635.jpg'
     let embed = new Discord.RichEmbed()
-      .setTitle('듄리님의 오픈채팅방은 없습니다.')
+      .setTitle('셀리님의 오픈채팅방은 없습니다.')
       .setURL()
-      .setAuthor('듄리', img, 'https://cafe.naver.com/purple90bcz')
-      .setThumbnail(img)
+      .setAuthor('셀리', img, 'https://cafe.naver.com/purple90bcz')
+      .setThumbnail(im)
       .addBlankField()
-      .addField('레벨', '90')
+      .addField('레벨', '51')
       .addField('소속 클랜', 'Melode', true)
-      .addField('직위', '부마스터', true)
+      .addField('직위', '클랜원', true)
       .addField('현재 상태', '정지', true)
-      .addField('듄리님의 매력', '???????\n??????\n???????\n')
+      .addField('셀리님의 매력', '1.귀여움\n2.엔댤 바보\n3.엔댤 멍청이\n')
+      .addField('본 사항은 셀리님이 직접 작성한 사항입니다.')
       .addBlankField()
       .setTimestamp()
 
@@ -127,7 +129,7 @@ client.on('message', (message) => {
       .setAuthor('엔댤', img, 'https://cafe.naver.com/purple90bcz')
       .setThumbnail(img)
       .addBlankField()
-      .addField('레벨', '89')
+      .addField('레벨', '90')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '부마스터', true)
       .addField('현재 상태', '정상', true)
@@ -159,7 +161,7 @@ client.on('message', (message) => {
       .setAuthor('전달사항', img, 'https://cafe.naver.com/purple90bcz')
       .setThumbnail(img)
       .addBlankField()
-      .addField('레벨', '90')
+      .addField('레벨', '95')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '클랜 마스터', true)
       .addField('현재 상태', '정상', true)
@@ -176,7 +178,7 @@ client.on('message', (message) => {
       .setAuthor('전달사항', img, 'https://cafe.naver.com/purple90bcz')
       .setThumbnail(img)
       .addBlankField()
-      .addField('레벨', '90')
+      .addField('레벨', '95')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '클랜 마스터', true)
       .addField('현재 상태', '정상', true)
