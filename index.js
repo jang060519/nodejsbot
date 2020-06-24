@@ -154,16 +154,12 @@ client.on('message', (message) => {
 
     message.channel.send(embed)
   } else if(message.content == '/채팅방') {     //부마스터 정보(듄링님)
-    let img = '';
+    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
     let embed = new Discord.RichEmbed()
       .setTitle('Melode클랜 채팅방')
       .setThumbnail(img)
       .addBlankField()
-      .addField('레벨', '??')
-      .addField('소속 클랜', 'Melode', true)
-      .addField('직위', '부마스터', true)
-      .addField('현재 상태', '정지', true)
-      .addField('듄링님의 매력', '???????\n??????\n???????\n')
+      .addField('클랜 오픈채팅방', '디스코드 : https://discord.gg/mq8uUXc \n카카오톡 : https://open.kakao.com/o/gndEvsfc (비밀번호 6382)\n네이버 카페 : https://cafe.naver.com/purple90bcz')
       .addBlankField()
       .setTimestamp()
 
