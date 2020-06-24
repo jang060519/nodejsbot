@@ -104,7 +104,7 @@ client.on('message', (message) => {
     message.channel.send(embed)
   } else if(message.content == '/who 셀리') {     //부마스터 정보(듄리님)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725292899972939906/KakaoTalk_20200624_191421635_01.jpg';
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725292925541548052/KakaoTalk_20200624_191421635.jpg'
+    let im = 'https://cdn.discordapp.com/attachments/718521409843888220/725292925541548052/KakaoTalk_20200624_191421635.jpg'
     let embed = new Discord.RichEmbed()
       .setTitle('셀리님의 오픈채팅방은 없습니다.')
       .setURL()
