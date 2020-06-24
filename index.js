@@ -10,7 +10,7 @@ const byeChannelComment = "다음에 또 만나요.ㅠㅠ";
 
 client.on('ready', () => {
   console.log('켰다.');
-  client.user.setPresence({ game: { name: 'league of legend' }, status: 'online' })
+  client.user.setPresence({ game: { name: 'Melode클랜 서포트' }, status: 'online' })
 });
 
 client.on("guildMemberAdd", (member) => {
