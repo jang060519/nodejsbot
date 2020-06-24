@@ -152,7 +152,7 @@ client.on('message', (message) => {
       .setTimestamp()
 
     message.channel.send(embed)
-  } else if(message.content == '/이벤트 1번째') {     //마스터 정보(전달사항)
+  } else if(message.content == '/이벤트 1번째') {    
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
     let im = 'https://cdn.discordapp.com/attachments/719029385088204981/725282760092024882/cu1592986388096.jpg'
     let embed = new Discord.RichEmbed()
@@ -224,9 +224,11 @@ client.on('message', (message) => {
       {name: '/who OOO', desc: '/who 뒤에 닉네임을 넣어 사용자 정보 보기'},
       {name: '/전체공지', desc: 'dm(개인 메세지)으로 전체 공지 보내기'},
       {name: '/전체공지2', desc: 'dm(개인 메세지)으로 전체 표 형식으로 공지 보내기'},
-      {name: '/청소', desc: '/청소 N(숫자) 명령어로 텍스트 지우기'},
+      {name: '/청소 n', desc: '/청소 n(숫자) 명령어로 텍스트 지우기'},
       {name: '/초대코드', desc: '해당 채널의 초대 코드 표기'},
       {name: '/초대코드2', desc: '봇이 들어가있는 모든 채널의 초대 코드 표기'},
+      {name: '/클랜 이벤트', desc: '클랜 이벤트 목록 모두 보기'},
+      {name: '/이벤트 n번째', desc: 'n에 숫자를 넣어 이벤트의 세부사항 보기'}
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
