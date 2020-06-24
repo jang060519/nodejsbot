@@ -172,12 +172,12 @@ client.on('message', (message) => {
     message.channel.send(embed)
   } else if(message.content == '/이벤트 2번째') {     //마스터 정보(전달사항)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
-    let im = 'https://cdn.discordapp.com/attachments/719029385088204981/725282441690087464/cu1592983785141.jpg'
+    let im2 = 'https://cdn.discordapp.com/attachments/719029385088204981/725282441690087464/cu1592983785141.jpg'
     let embed = new Discord.RichEmbed()
       .setTitle('너의 스킨 꾸미기 실력을 보여줘.')
       .setURL('https://open.kakao.com/o/s1BI4jVb')
-      .setAuthor('전달사항님의 이벤트 입니다.', img, '')
-      .setThumbnail(im)
+      .setAuthor('전달사항님의 이벤트입니다.', img, '')
+      .setThumbnail(im2)
       .addBlankField()
       .addField('주최자', '전달사항')
       .addField('소속 클랜', 'Melode', true)
