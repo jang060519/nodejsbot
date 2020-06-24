@@ -10,7 +10,7 @@ const byeChannelComment = "다음에 또 만나요.ㅠㅠ";
 
 client.on('ready', () => {
   console.log('켰다.');
-  client.user.setPresence({ game: { name: 'Melode클랜 서포트' }, status: 'online' })
+  client.user.setPresence({ game: { name: 'Melode클랜 서포트' }, status: 'offline' })
 });
 
 client.on("guildMemberAdd", (member) => {
@@ -145,6 +145,25 @@ client.on('message', (message) => {
       .setThumbnail(img)
       .addBlankField()
       .addField('클랜 이벤트 목록', '1번째 이벤트 : 너의 스킨 꾸미기 실력을 보여줘. (7월 Coming Soon)\n2번째 이벤트 : 클랜에 대해 아시나요? (7월 Coming Soon)\n3번째 이벤트 : 추후에 추가될 예정')
+      .addField('자세한 사항은 명령어 "/이벤트 n번째"를 입력해주세요.')
+      .addBlankField()
+      .setTimestamp()
+
+    message.channel.send(embed)
+  } else if(message.content == '/이벤트 1번째') {     //마스터 정보(전달사항)
+    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
+    let im = ''
+    let embed = new Discord.RichEmbed()
+      .setTitle('전달사항님의 카카오톡 1대1 오픈채팅방')
+      .setURL('https://open.kakao.com/o/s1BI4jVb')
+      .setAuthor('전달사항', img, 'https://cafe.naver.com/purple90bcz')
+      .setThumbnail(img)
+      .addBlankField()
+      .addField('레벨', '90')
+      .addField('소속 클랜', 'Melode', true)
+      .addField('직위', '클랜 마스터', true)
+      .addField('현재 상태', '정상', true)
+      .addField('전달사항님의 매력', '???????\n???????\n???????\n')
       .addBlankField()
       .setTimestamp()
 
