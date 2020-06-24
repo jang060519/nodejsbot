@@ -114,9 +114,9 @@ client.on('message', (message) => {
       .addField('레벨', '51')
       .addField('소속 클랜', 'Melode', true)
       .addField('직위', '클랜원', true)
-      .addField('현재 상태', '정상', true)
+      .addField('현재 상태', '부계정 키우고 있음', true)
       .addField('셀리님의 매력', '1.귀여움\n2.엔댤 바보\n3.엔댤 멍청이\n',true)
-      .addField('본 사항은 셀리님이 직접 작성한 사항입니다.')
+      .addField('본 사항은 셀리님이 직접 작성한 사항입니다.','')
       .addBlankField()
       .setTimestamp()
 
@@ -165,7 +165,25 @@ client.on('message', (message) => {
       .addField('소속 클랜', 'Melode', true)
       .addField('이벤트 시작 시간', '7월 Coming Soon', true)
       .addField('이벤트 종료 시간', '7월 Coming Soon', true)
-      .addField('이벤트 보상', '1등 : 좀비고 코믹스 19권 쿠폰 세트\n2등 : 좀비고 코믹스 19권 쿠폰 세트\n3등 : 좀비고 코믹스 19권 쿠폰 세트\n')
+      .addField('이벤트 보상', '추첨을 통해 당첨된 1명에게\n"좀비고 코믹스 19권 쿠폰 세트"를 드립니다.')
+      .addBlankField()
+      .setTimestamp()
+
+    message.channel.send(embed)
+  } else if(message.content == '/이벤트 2번째') {     //마스터 정보(전달사항)
+    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
+    let im = 'https://cdn.discordapp.com/attachments/719029385088204981/725282441690087464/cu1592983785141.jpg'
+    let embed = new Discord.RichEmbed()
+      .setTitle('너의 스킨 꾸미기 실력을 보여줘.')
+      .setURL('https://open.kakao.com/o/s1BI4jVb')
+      .setAuthor('전달사항님의 이벤트 입니다.', img, '')
+      .setThumbnail(im)
+      .addBlankField()
+      .addField('주최자', '전달사항')
+      .addField('소속 클랜', 'Melode', true)
+      .addField('이벤트 시작 시간', '7월 Coming Soon', true)
+      .addField('이벤트 종료 시간', '7월 Coming Soon', true)
+      .addField('이벤트 보상', '추첨을 통해 당첨된 1명에게\n"좀비고 코믹스 19권 쿠폰 세트"를 드립니다.')
       .addBlankField()
       .setTimestamp()
 
