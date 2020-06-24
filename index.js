@@ -136,6 +136,19 @@ client.on('message', (message) => {
       .setTimestamp()
 
     message.channel.send(embed)
+  } else if(message.content == '/클랜 이벤트') {     
+    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
+    let embed = new Discord.RichEmbed()
+      .setTitle('클랜이벤트 목록')
+      .setURL('https://open.kakao.com/o/smOEmZ5b')
+      .setAuthor('Melode클랜 이벤트', img)
+      .setThumbnail(img)
+      .addBlankField()
+      .addField('클랜 이벤트 목록', '1번째 이벤트 : 너의 스킨 꾸미기 실력을 보여줘. (7월 Coming Soon)\n2번째 이벤트 : 클랜에 대해 아시나요? (7월 Coming Soon)\n3번째 이벤트 : 추후에 추가될 예정')
+      .addBlankField()
+      .setTimestamp()
+
+    message.channel.send(embed)
   } else if(message.content == '/who 전달사항') {     //마스터 정보(전달사항)
     let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718535648142688326/unknown.png';
     let embed = new Discord.RichEmbed()
