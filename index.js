@@ -3,8 +3,8 @@ const client = new Discord.Client();
 const token = process.argv.length == 2 ? process.env.token : "";
 const moment = require("moment");
 require("moment-duration-format");
-const welcomeChannelName = "꧁𝓦𝒆𝓵𝓬𝓸𝓶𝒆꧂";
-const byeChannelName = "𝓖𝓸𝓸𝓭-𝓑𝔂𝒆😥";
+const welcomeChannelName = "😃꧁𝓦𝒆𝓵𝓬𝓸𝓶𝒆꧂😃";
+const byeChannelName = "😥𝓖𝓸𝓸𝓭-𝓑𝔂𝒆😥";
 const welcomeChannelComment = "Melode클랜 디스코드에 오신것을 환영합니다.\n다른 채팅방을 알고싶으시면\n'/채팅방'을 입력하여 주세요.";
 const byeChannelComment = "다음에 또 만나요.ㅠㅠ";
 
