@@ -3,14 +3,39 @@ const client = new Discord.Client();
 const token = process.argv.length == 2 ? process.env.token : "";
 const moment = require("moment");
 require("moment-duration-format");
-const welcomeChannelName = "꧁𝓦𝒆𝓵𝓬𝓸𝓶𝒆꧂";
-const byeChannelName = "𝓖𝓸𝓸𝓭-𝓑𝔂𝒆😥";
-const welcomeChannelComment = "Melode클랜 디스코드에 오신것을 환영합니다.\n다른 채팅방을 알고싶으시면\n'/채팅방'을 입력하여 주세요.";
-const byeChannelComment = "다음에 또 만나요.ㅠㅠ";
+const momenttz = require('moment-timezone');
+const MessageAdd = require('./db/message_add.js')
+const welcomeChannelName = "안녕하세요";
+const byeChannelName = "안녕히가세요";
+const welcomeChannelComment = "어서오세요.";
+const byeChannelComment = "안녕히가세요.";
+const adminUserId = 250693463065100298;
 
 client.on('ready', () => {
   console.log('켰다.');
-  client.user.setPresence({ game: { name: 'Melode클랜 서포트' }, status: 'online' })
+  client.user.setPresence({ game: { name: '!help를 쳐보세요.' }, status: 'online' })
+
+  let state_list = [
+    '!help를 쳐보세요.',
+    '메렁메렁',
+    '에베베베베',
+  ]
+  let state_list_index = 1;
+  let change_delay = 3000; // 이건 초입니당. 1000이 1초입니당.
+
+  function changeState() {
+    setTimeout(() => {
+      // console.log( '상태 변경 -> ', state_list[state_list_index] );
+      client.user.setPresence({ game: { name: state_list[state_list_index] }, status: 'online' })
+      state_list_index += 1;
+      if(state_list_index >= state_list.length) {
+        state_list_index = 0;
+      }
+      changeState()
+    }, change_delay);
+  }
+
+  // changeState();
 });
 
 client.on("guildMemberAdd", (member) => {
@@ -18,9 +43,9 @@ client.on("guildMemberAdd", (member) => {
   const newUser = member.user;
   const welcomeChannel = guild.channels.find(channel => channel.name == welcomeChannelName);
 
-  welcomeChannel.send(`<@${newUser.id}>님 ${welcomeChannelComment}\n`);
+  welcomeChannel.send(`<@${newUser.id}> ${welcomeChannelComment}\n`);
 
-  member.addRole(guild.roles.find(role => role.name == "클랜원"));
+  member.addRole(guild.roles.find(role => role.name == "게스트"));
 });
 
 client.on("guildMemberRemove", (member) => {
@@ -31,20 +56,61 @@ client.on("guildMemberRemove", (member) => {
   byeChannel.send(`<@${deleteUser.id}> ${byeChannelComment}\n`);
 });
 
+client.on("messageUpdate", (message) => {
+  MessageSave(message, true)
+});
+
 client.on('message', (message) => {
+  MessageSave(message)
   if(message.author.bot) return;
+
+  if(message.channel.type == 'dm') {
+    if(message.author.id == adminUserId) return;
+
+    /* not use embed */
+    let msg = message.author+'이(가) 메세지를 보냈습니다.\n'+message.content;
+    client.users.find(x => x.id == adminUserId).send(msg)
+
+    // /* use embed */
+    // let embed = new Discord.RichEmbed()
+    // let img = message.author.avatar ? `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.webp?size=256` : undefined;
+    // let user = message.author.username+'#'+message.author.discriminator
+    // let msg = message.content;
+    // embed.setColor('#186de6')
+    // embed.setAuthor(user+'이(가) 메세지를 보냈습니다.', img)
+    // embed.setFooter(`콜라곰 BOT ❤️`)
+    // embed.addField('메세지 내용', msg, true);
+    // embed.setTimestamp()
+    // client.users.find(x => x.id == adminUserId).send(embed);
+  }
+
+  if(message.content.startsWith('!역할추가')) {
+    if(message.channel.type == 'dm') {
+      return message.reply('dm에서 사용할 수 없는 명령어 입니다.');
+    }
+    if(message.channel.type != 'dm' && checkPermission(message)) return
+
+    if(message.content.split('<@').length == 3) {
+      if(message.content.split(' ').length != 3) return;
+
+      var userId = message.content.split(' ')[1].match(/[\u3131-\uD79D^a-zA-Z^0-9]/ugi).join('')
+      var role = message.content.split(' ')[2].match(/[\u3131-\uD79D^a-zA-Z^0-9]/ugi).join('')
+
+      message.member.guild.members.find(x => x.id == userId).addRole(role);
+    }
+  }
 
   if(message.content == 'ping') {
     return message.reply('pong');
   }
 
-  if(message.content == '/server') {
+  if(message.content == '!si') {
     let embed = new Discord.RichEmbed()
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/719466063544451072/bot_img.PNG';
+    let img = 'https://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
     var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
     embed.setColor('#186de6')
-    embed.setAuthor('server info of Melode BOT', img)
-    embed.setFooter(`Melode BOT ❤️`)
+    embed.setAuthor('server info of 콜라곰 BOT', img)
+    embed.setFooter(`콜라곰 BOT ❤️`)
     embed.addBlankField()
     embed.addField('RAM usage',    `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true);
     embed.addField('running time', `${duration}`, true);
@@ -53,11 +119,11 @@ client.on('message', (message) => {
     // embed.addField('channel',      `${client.channels.size.toLocaleString()}`, true);
     embed.addField('Discord.js',   `v${Discord.version}`, true);
     embed.addField('Node',         `${process.version}`, true);
-    
+
     let arr = client.guilds.array();
     let list = '';
     list = `\`\`\`css\n`;
-    
+
     for(let i=0;i<arr.length;i++) {
       // list += `${arr[i].name} - ${arr[i].id}\n`
       list += `${arr[i].name}\n`
@@ -67,176 +133,45 @@ client.on('message', (message) => {
 
     embed.setTimestamp()
     message.channel.send(embed);
+  }
 
-  }   if(message.content == '/who 녤쁨') {     //부마스터 정보(녤쁨님)
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718542239881756783/unknown.png';
+  if(message.content == 'embed') {
+    let img = 'https://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
     let embed = new Discord.RichEmbed()
-      .setTitle('녤쁨님의 카카오톡 1대1 오픈채팅방')
-      .setURL('https://open.kakao.com/o/sq6cdS3b')
-      .setAuthor('녤쁨', img, 'https://cafe.naver.com/purple90bcz')
+      .setTitle('타이틀')
+      .setURL('http://www.naver.com')
+      .setAuthor('나긋해', img, 'http://www.naver.com')
       .setThumbnail(img)
       .addBlankField()
-      .addField('레벨', '76')
-      .addField('소속 클랜', 'Melode', true)
-      .addField('직위', '부마스터', true)
-      .addField('현재 상태', '정상', true)
-      .addField('녤쁨님의 매력', '1. 귀엽다.\n??????\n???????\n')
+      .addField('Inline field title', 'Some value here')
+      .addField('Inline field title', 'Some value here', true)
+      .addField('Inline field title', 'Some value here', true)
+      .addField('Inline field title', 'Some value here', true)
+      .addField('Inline field title', 'Some value here1\nSome value here2\nSome value here3\n')
       .addBlankField()
       .setTimestamp()
+      .setFooter('나긋해가 만듬', img)
 
     message.channel.send(embed)
-  } else if(message.content == '/who 듄링') {     //부마스터 정보(듄링님)
-    let img = '';
-    let embed = new Discord.RichEmbed()
-      .setTitle('듄링님의 오픈채팅방은 없습니다.')
-      .setURL()
-      .setAuthor('듄링', img, 'https://cafe.naver.com/purple90bcz')
-      .setThumbnail(img)
-      .addBlankField()
-      .addField('레벨', '??')
-      .addField('소속 클랜', 'Melode', true)
-      .addField('직위', '부마스터', true)
-      .addField('현재 상태', '정상', true)
-      .addField('듄링님의 매력', '???????\n??????\n???????\n')
-      .addBlankField()
-      .setTimestamp()
-
-    message.channel.send(embed)
-  } else if(message.content == '/who 셀리') {     //부마스터 정보(듄리님)
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725292899972939906/KakaoTalk_20200624_191421635_01.jpg';
-    let im = 'https://cdn.discordapp.com/attachments/718521409843888220/725292925541548052/KakaoTalk_20200624_191421635.jpg'
-    let embed = new Discord.RichEmbed()
-      .setTitle('셀리님의 오픈채팅방은 없습니다.')
-      .setURL()
-      .setAuthor('셀리', img, 'https://cafe.naver.com/purple90bcz')
-      .setThumbnail(im)
-      .addBlankField()
-      .addField('레벨', '51')
-      .addField('소속 클랜', 'Melode', true)
-      .addField('직위', '클랜원', true)
-      .addField('현재 상태', '부계정 키우고 있음', true)
-      .addField('셀리님의 매력', '1.귀여움\n2.엔댤 바보\n3.엔댤 멍청이\n',true)
-      .addField('본 사항은 셀리님이 직접 작성한 사항입니다.','엔댤님이 혼내주세요.')
-      .addBlankField()
-      .setTimestamp()
-
-    message.channel.send(embed)
-  } else if(message.content == '/who 엔댤') {     //부마스터 정보(엔댤님)
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718548101761073213/unknown.png';
-    let embed = new Discord.RichEmbed()
-      .setTitle('엔댤님의 카카오톡 1대1 오픈채팅방')
-      .setURL('https://open.kakao.com/o/smOEmZ5b')
-      .setAuthor('엔댤', img, 'https://cafe.naver.com/purple90bcz')
-      .setThumbnail(img)
-      .addBlankField()
-      .addField('레벨', '90')
-      .addField('소속 클랜', 'Melode', true)
-      .addField('직위', '부마스터', true)
-      .addField('현재 상태', '정상', true)
-      .addField('엔댤님의 매력', '???????\n??????\n???????\n')
-      .addBlankField()
-      .setTimestamp()
-
-    message.channel.send(embed)
-  } else if(message.content == '/클랜 이벤트') {     
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
-    let embed = new Discord.RichEmbed()
-      .setTitle('클랜이벤트 목록')
-      .setURL('https://open.kakao.com/o/smOEmZ5b')
-      .setAuthor('Melode클랜 이벤트', img)
-      .setThumbnail(img)
-      .addBlankField()
-      .addField('클랜 이벤트 목록', '1번째 이벤트 : 너의 스킨 꾸미기 실력을 보여줘. (7월 Coming Soon)\n2번째 이벤트 : 클랜에 대해 아시나요? (7월 Coming Soon)\n3번째 이벤트 : 추후에 추가될 예정', true)
-      .addField('자세한 사항은 명령어 "/이벤트 n번째"를 입력해주세요.')
-      .addBlankField()
-      .setTimestamp()
-
-    message.channel.send(embed)
-  } else if(message.content == '/이벤트 1번째') {    
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
-    let im = 'https://cdn.discordapp.com/attachments/719029385088204981/725282760092024882/cu1592986388096.jpg'
-    let embed = new Discord.RichEmbed()
-      .setTitle('너의 스킨 꾸미기 실력을 보여줘.')
-      .setURL('https://open.kakao.com/o/s1BI4jVb')
-      .setAuthor('전달사항님의 이벤트 입니다.', img, '')
-      .setThumbnail(im)
-      .addBlankField()
-      .addField('주최자', '전달사항')
-      .addField('소속 클랜', 'Melode', true)
-      .addField('이벤트 시작 시간', '7월 Coming Soon', true)
-      .addField('이벤트 종료 시간', '7월 Coming Soon', true)
-      .addField('이벤트 보상', '추첨을 통해 당첨된 1명에게\n"좀비고 코믹스 19권 쿠폰 세트"를 드립니다.')
-      .addBlankField()
-      .setTimestamp()
-
-    message.channel.send(embed)
-  } else if(message.content == '/이벤트 2번째') {     //마스터 정보(전달사항)
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
-    let im = 'https://cdn.discordapp.com/attachments/719029385088204981/725282441690087464/cu1592983785141.jpg'
-    let embed = new Discord.RichEmbed()
-      .setTitle('너의 스킨 꾸미기 실력을 보여줘.')
-      .setURL('https://open.kakao.com/o/s1BI4jVb')
-      .setAuthor('전달사항님의 이벤트입니다.', img, '')
-      .setThumbnail(im)
-      .addBlankField()
-      .addField('주최자', '전달사항')
-      .addField('소속 클랜', 'Melode', true)
-      .addField('이벤트 시작 시간', '7월 Coming Soon', true)
-      .addField('이벤트 종료 시간', '7월 Coming Soon', true)
-      .addField('이벤트 보상', '추첨을 통해 당첨된 1명에게\n"좀비고 코믹스 19권 쿠폰 세트"를 드립니다.')
-      .addBlankField()
-      .setTimestamp()
-
-    message.channel.send(embed)
-  } else if(message.content == '/who 전달사항') {     //마스터 정보(전달사항)
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/718535648142688326/unknown.png';
-    let embed = new Discord.RichEmbed()
-      .setTitle('전달사항님의 카카오톡 1대1 오픈채팅방')
-      .setURL('https://open.kakao.com/o/s1BI4jVb')
-      .setAuthor('전달사항', img, 'https://cafe.naver.com/purple90bcz')
-      .setThumbnail(img)
-      .addBlankField()
-      .addField('레벨', '95')
-      .addField('소속 클랜', 'Melode', true)
-      .addField('직위', '클랜 마스터', true)
-      .addField('현재 상태', '정상', true)
-      .addField('전달사항님의 매력', '???????\n???????\n???????\n')
-      .addBlankField()
-      .setTimestamp()
-
-    message.channel.send(embed)
-  } else if(message.content == '/채팅방') {     //부마스터 정보(듄링님)
-    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725285416932081714/KakaoTalk_20200624_184440079_01.jpg';
-    let embed = new Discord.RichEmbed()
-      .setTitle('Melode클랜 채팅방')
-      .setThumbnail(img)
-      .addBlankField()
-      .addField('클랜 오픈채팅방', '디스코드 : https://discord.gg/mq8uUXc \n카카오톡 : https://open.kakao.com/o/gndEvsfc (비밀번호 6382)\n네이버 카페 : https://cafe.naver.com/purple90bcz')
-      .addBlankField()
-      .setTimestamp()
-
-    message.channel.send(embed)
-  } else if(message.content == '/help') {
+  } else if(message.content == '!help') {
     let helpImg = 'https://images-ext-1.discordapp.net/external/RyofVqSAVAi0H9-1yK6M8NGy2grU5TWZkLadG-rwqk0/https/i.imgur.com/EZRAPxR.png';
     let commandList = [
-      {name: '/help', desc: '현재 명령어 목록 보기'},
-      {name: '/server', desc: '현재 서버 상태 보기'},
-      {name: '/who OOO', desc: '/who 뒤에 닉네임을 넣어 사용자 정보 보기'},
-      {name: '/전체공지', desc: 'dm(개인 메세지)으로 전체 공지 보내기'},
-      {name: '/전체공지2', desc: 'dm(개인 메세지)으로 전체 표 형식으로 공지 보내기'},
-      {name: '/청소 n', desc: '/청소 n(숫자) 명령어로 텍스트 지우기'},
-      {name: '/초대코드', desc: '해당 채널의 초대 코드 표기'},
-      {name: '/초대코드2', desc: '봇이 들어가있는 모든 채널의 초대 코드 표기'},
-      {name: '/클랜 이벤트', desc: '클랜 이벤트 목록 모두 보기'},
-      {name: '/이벤트 n번째', desc: 'n에 숫자를 넣어 이벤트의 세부사항 보기'}
+      {name: '!help', desc: 'help'},
+      {name: 'ping', desc: '현재 핑 상태'},
+      {name: 'embed', desc: 'embed 예제1'},
+      {name: '!전체공지', desc: 'dm으로 전체 공지 보내기'},
+      {name: '!전체공지2', desc: 'dm으로 전체 embed 형식으로 공지 보내기'},
+      {name: '!청소', desc: '텍스트 지움'},
+      {name: '!초대코드', desc: '해당 채널의 초대 코드 표기'},
+      {name: '!초대코드2', desc: '봇이 들어가있는 모든 채널의 초대 코드 표기'},
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
-      .setAuthor('Help of Melode BOT', helpImg)
+      .setAuthor('Help of 콜라곰 BOT', helpImg)
       .setColor('#186de6')
-      .setFooter(`Melode BOT ❤️`)
+      .setFooter(`콜라곰 BOT ❤️`)
       .setTimestamp()
-    
+
     commandList.forEach(x => {
       commandStr += `• \`\`${changeCommandStringLength(`${x.name}`)}\`\` : **${x.desc}**\n`;
     });
@@ -244,7 +179,7 @@ client.on('message', (message) => {
     embed.addField('Commands: ', commandStr);
 
     message.channel.send(embed)
-  } else if(message.content == '/초대코드2') {
+  } else if(message.content == '!초대코드2') {
     client.guilds.array().forEach(x => {
       x.channels.find(x => x.type == 'text').createInvite({maxAge: 0}) // maxAge: 0은 무한이라는 의미, maxAge부분을 지우면 24시간으로 설정됨
         .then(invite => {
@@ -256,7 +191,7 @@ client.on('message', (message) => {
           }
         })
     });
-  } else if(message.content == '/초대코드') {
+  } else if(message.content == '!초대코드') {
     if(message.channel.type == 'dm') {
       return message.reply('dm에서 사용할 수 없는 명령어 입니다.');
     }
@@ -269,28 +204,28 @@ client.on('message', (message) => {
           message.channel.send('**'+message.guild.channels.get(message.channel.id).guild.name+'** 채널 권한이 없어 초대코드 발행 실패')
         }
       })
-  } else if(message.content.startsWith('/전체공지2')) {
+  } else if(message.content.startsWith('!전체공지2')) {
     if(checkPermission(message)) return
     if(message.member != null) { // 채널에서 공지 쓸 때
-      let contents = message.content.slice('/전체공지2'.length);
+      let contents = message.content.slice('!전체공지2'.length);
       let embed = new Discord.RichEmbed()
-        .setAuthor('공지 of Melode BOT')
+        .setAuthor('공지 of 콜라곰 BOT')
         .setColor('#186de6')
-        .setFooter(`Melode BOT ❤️`)
+        .setFooter(`콜라곰 BOT ❤️`)
         .setTimestamp()
-  
+
       embed.addField('공지: ', contents);
-  
+
       message.member.guild.members.array().forEach(x => {
         if(x.user.bot) return;
         x.user.send(embed)
       });
-  
+
       return message.reply('공지를 전송했습니다.');
     } else {
       return message.reply('채널에서 실행해주세요.');
     }
-  } else if(message.content.startsWith('/전체공지')) {
+  } else if(message.content.startsWith('!전체공지')) {
     if(checkPermission(message)) return
     if(message.member != null) { // 채널에서 공지 쓸 때
       let contents = message.content.slice('!전체공지'.length);
@@ -298,23 +233,23 @@ client.on('message', (message) => {
         if(x.user.bot) return;
         x.user.send(`<@${message.author.id}> ${contents}`);
       });
-  
+
       return message.reply('공지를 전송했습니다.');
     } else {
       return message.reply('채널에서 실행해주세요.');
     }
-  } else if(message.content.startsWith('/청소')) {
+  } else if(message.content.startsWith('!청소')) {
     if(message.channel.type == 'dm') {
       return message.reply('dm에서 사용할 수 없는 명령어 입니다.');
     }
-    
+
     if(message.channel.type != 'dm' && checkPermission(message)) return
 
     var clearLine = message.content.slice('!청소 '.length);
     var isNum = !isNaN(clearLine)
 
-    if(isNum && (clearLine <= 0 || 99 < clearLine)) {
-      message.channel.send("1부터 99까지의 숫자만 입력해주세요.")
+    if(isNum && (clearLine <= 0 || 100 < clearLine)) {
+      message.channel.send("1부터 100까지의 숫자만 입력해주세요.")
       return;
     } else if(!isNum) { // c @나긋해 3
       if(message.content.split('<@').length == 2) {
@@ -337,10 +272,36 @@ client.on('message', (message) => {
     } else {
       message.channel.bulkDelete(parseInt(clearLine)+1)
         .then(() => {
-          AutoMsgDelete(message, `<@${message.author.id}> `+ "님이" + parseInt(clearLine) + " 개의 메시지를 삭제했습니다. (이 메세지는 잠시 후에 사라집니다.)");
+          AutoMsgDelete(message, `<@${message.author.id}> ` + parseInt(clearLine) + "개의 메시지를 삭제했습니다. (이 메세지는 잠시 후에 사라집니다.)");
         })
         .catch(console.error)
     }
+  } else if(message.content.startsWith('!강퇴')) {
+    if(message.channel.type == 'dm') {
+      return message.reply('dm에서 사용할 수 없는 명령어 입니다.');
+    }
+
+    if(message.channel.type != 'dm' && checkPermission(message)) return
+
+    console.log(message.mentions);
+
+    let userId = message.mentions.users.first().id;
+    let kick_msg = message.author.username+'#'+message.author.discriminator+'이(가) 강퇴시켰습니다.';
+
+    message.member.guild.members.find(x => x.id == userId).kick(kick_msg)
+  } else if(message.content.startsWith('!밴')) {
+    if(message.channel.type == 'dm') {
+      return message.reply('dm에서 사용할 수 없는 명령어 입니다.');
+    }
+
+    if(message.channel.type != 'dm' && checkPermission(message)) return
+
+    console.log(message.mentions);
+
+    let userId = message.mentions.users.first().id;
+    let kick_msg = message.author.username+'#'+message.author.discriminator+'이(가) 강퇴시켰습니다.';
+
+    message.member.guild.members.find(x => x.id == userId).ban(kick_msg)
   }
 });
 
@@ -372,5 +333,75 @@ async function AutoMsgDelete(message, str, delay = 3000) {
   }, delay);
 }
 
+function getEmbedFields(message, modify=false) {
+  if(message.content == '' && message.embeds.length > 0) {
+    let e = message.embeds[0].fields;
+    let a = [];
 
-client.login(token);
+    for(let i=0;i<e.length;i++) {
+        a.push(`\`${e[i].name}\` - \`${e[i].value}\`\n`);
+    }
+
+    return a.join('');
+  } else if(modify) {
+    return message.author.lastMessage.content;
+  } else {
+    return message.content;
+  }
+}
+
+function MessageSave(message, modify=false) {
+  imgs = []
+  if (message.attachments.array().length > 0) {
+    message.attachments.array().forEach(x => {
+      imgs.push(x.url+'\n')
+    });
+  }
+
+  username = message.author.username.match(/[\u3131-\uD79D^a-zA-Z^0-9]/ugi)
+  channelName = message.channel.type != 'dm' ? message.channel.name : ''
+  try {
+    username = username.length > 1 ? username.join('') : username
+  } catch (error) {}
+
+  try {
+    channelName = channelName.length > 1 ? channelName.join('') : channelName
+  } catch (error) {}
+
+  var s = {
+    ChannelType: message.channel.type,
+    ChannelId: message.channel.type != 'dm' ? message.channel.id : '',
+    ChannelName: channelName,
+    GuildId: message.channel.type != 'dm' ? message.channel.guild.id : '',
+    GuildName: message.channel.type != 'dm' ? message.channel.guild.name : '',
+    Message: getEmbedFields(message, modify),
+    AuthorId: message.author.id,
+    AuthorUsername: username + '#' + message.author.discriminator,
+    AuthorBot: Number(message.author.bot),
+    Embed: Number(message.embeds.length > 0), // 0이면 false 인거다.
+    CreateTime: momenttz().tz('Asia/Seoul').locale('ko').format('ll dddd LTS')
+  }
+
+  s.Message = (modify ? '[수정됨] ' : '') + imgs.join('') + s.Message
+
+  MessageAdd(
+    s.ChannelType,
+    s.ChannelId,
+    s.ChannelName,
+    s.GuildId,
+    s.GuildName,
+    s.Message,
+    s.AuthorId,
+    s.AuthorUsername,
+    s.AuthorBot,
+    s.Embed,
+    s.CreateTime,
+  )
+    // .then((res) => {
+    //   console.log('db 저장을 했다.', res);
+    // })
+    .catch(error => console.log(error))
+}
+
+
+client.login(token); 
