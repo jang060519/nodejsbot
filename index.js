@@ -11,6 +11,28 @@ const byeChannelComment = "안녕히가세요.";
 client.on('ready', () => {
   console.log('켰다.');
   client.user.setPresence({ game: { name: '!help를 쳐보세요.' }, status: 'online' })
+
+  let state_list = [
+   '!help를 쳐보세요.',
+   '메렁메렁',
+   '에베베베베',
+]
+  let state_list_index = 1;
+  let change_delay = 3000;
+
+  function changeState() {
+    setTimeout(() => {
+      // console.log( '상태 변경 -> ', state_list[state_list_index] );
+      client.user.setPresence({ game: { name: state_list[state_list_index] }, status: 'online' })
+      state_list_index += 1;
+      if(state_list_index >= state_list.length) {
+        state_list_index = 0;
+      }
+      changeState()
+    }, change_delay);
+  }
+
+  // changeState();
 });
 
 client.on("guildMemberAdd", (member) => {
@@ -40,11 +62,11 @@ client.on('message', (message) => {
 
   if(message.content == '!si') {
     let embed = new Discord.RichEmbed()
-    let img = 'https://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
+    let img = 'https://cdn.discordapp.com/attachments/718521409843888220/725292899972939906/KakaoTalk_20200624_191421635_01.jpg';
     var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
     embed.setColor('#186de6')
-    embed.setAuthor('server info of 콜라곰 BOT', img)
-    embed.setFooter(`콜라곰 BOT ❤️`)
+    embed.setAuthor('server info of MelodE BOT', img)
+    embed.setFooter(`MelodE BOT`)
     embed.addBlankField()
     embed.addField('RAM usage',    `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true);
     embed.addField('running time', `${duration}`, true);
