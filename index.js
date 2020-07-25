@@ -18,7 +18,7 @@ client.on('ready', () => {
    '에베베베베',
 ]
   let state_list_index = 1;
-  let change_delay = 3000;
+  let change_delay = 1000;
 
   function changeState() {
     setTimeout(() => {
@@ -165,9 +165,9 @@ client.on('message', (message) => {
     if(message.member != null) { // 채널에서 공지 쓸 때
       let contents = message.content.slice('!전체공지2'.length);
       let embed = new Discord.RichEmbed()
-        .setAuthor('공지 of 콜라곰 BOT')
+        .setAuthor('공지 of MelodE BOT')
         .setColor('#186de6')
-        .setFooter(`콜라곰 BOT ❤️`)
+        .setFooter(`MelodE BOT`)
         .setTimestamp()
   
       embed.addField('공지: ', contents);
@@ -204,8 +204,8 @@ client.on('message', (message) => {
     var clearLine = message.content.slice('!청소 '.length);
     var isNum = !isNaN(clearLine)
 
-    if(isNum && (clearLine <= 0 || 100 < clearLine)) {
-      message.channel.send("1부터 100까지의 숫자만 입력해주세요.")
+    if(isNum && (clearLine <= 0 || 99 < clearLine)) {
+      message.channel.send("1부터 99까지의 숫자만 입력해주세요.")
       return;
     } else if(!isNum) { // c @나긋해 3
       if(message.content.split('<@').length == 2) {
