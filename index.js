@@ -18,7 +18,7 @@ client.on('ready', () => {
    '에베베베베',
 ]
   let state_list_index = 1;
-  let change_delay = 1000;
+  let change_delay = 3000;
 
   function changeState() {
     setTimeout(() => {
